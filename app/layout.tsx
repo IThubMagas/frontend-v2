@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Header from '@/widgets/header/ui/index';
 import './globals.css';
+import ThemeRegistry from './theme-registry';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-full flex flex-col">
         <Header />
-        {children}
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );
