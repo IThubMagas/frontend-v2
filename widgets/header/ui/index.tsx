@@ -1,4 +1,7 @@
+'use client';
+import CustomButton from '@/shared/ui/button';
 import Navigation from './navigation';
+
 export default function index() {
   return (
     <header className="flex justify-between align-center pt-16 pl-24 pr-24 pb-6">
@@ -7,7 +10,18 @@ export default function index() {
       </h1>
       <div className="flex gap-28">
         <Navigation />
-        {/* Вот на этой строке ты вставишь компонент кнопки входа */}
+        <CustomButton
+          variant="outlined"
+          width={121}
+          height={40}
+          textColor="#9747FF"
+          borderColor="#9747FF"
+          onClick={() => {
+            alert(123);
+          }}
+        >
+          Вход
+        </CustomButton>
       </div>
     </header>
   );
