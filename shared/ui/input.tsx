@@ -139,7 +139,6 @@ export const Input = ({
 
         '&.Mui-focused': {
           outline: 'none',
-          border: '1px solid #D6D7FF',
           backgroundColor: '#F9F9F9',
         },
       },
