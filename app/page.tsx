@@ -1,11 +1,37 @@
 'use client';
 
 import { Input } from '@/shared/ui/input';
+import Title from '@/shared/ui/title'
 
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center justify-center font-sans">
       <h1>Главная страница</h1>
+      
+      <Title variant="form" component="h1">
+        Регистрация
+      </Title>
+
+      <Title variant="page" component="h1">
+        Мой профиль
+      </Title>
+
+      <Title variant="page" sx={{ fontSize: '32px' }}>
+        Создать заявку
+      </Title>
+
+      <Title variant="section">
+        О себе
+      </Title>
+
+      <Title variant="section" sx={{ fontWeight: 700 }}>
+        О себе (жирный)
+      </Title>
+
+      <Title variant="small">
+        Статус
+      </Title>
+
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '400px', marginTop: '20px' }}>
         
