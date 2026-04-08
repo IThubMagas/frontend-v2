@@ -83,7 +83,6 @@ export const Input = ({
           },
         },
 
-        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
         '& textarea': {
           resize: 'vertical', // можно растягивать по вертикали
           minHeight: '80px',  // минимальная высота
@@ -129,7 +128,6 @@ export const Input = ({
           },
         },
 
-        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
         '& textarea': {
           resize: 'vertical',
           minHeight: '80px',
@@ -178,7 +176,7 @@ export const Input = ({
           },
         },
 
-        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
+     
         '& textarea': {
           resize: 'vertical',
           minHeight: '80px',
