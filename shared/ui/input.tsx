@@ -1,13 +1,58 @@
+'use client';
+
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
 
 interface InputProps {
   type: 'outlined' | 'filled' | 'labeled';
   placeholder?: string;
   label?: string;
   errorText?: string;
+  inputType?: 'text' | 'password' | 'email';
+  withPasswordToggle?: boolean;
+  multiline?: boolean;
+  rows?: number;
 }
 
-export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
+export const Input = ({ 
+  type, 
+  placeholder, 
+  label, 
+  errorText,
+  inputType = 'text',
+  withPasswordToggle = false,
+  multiline = false,
+  rows = 4
+}: InputProps) => {
+  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const getActualInputType = () => {
+    if (withPasswordToggle && inputType === 'password') {
+      return showPassword ? 'text' : 'password';
+    }
+    return inputType;
+  };
+
+  const passwordToggleIcon = (
+    <InputAdornment position="end" sx={{ marginRight: '12px' }}>
+      <IconButton
+        onClick={() => setShowPassword(!showPassword)}
+        edge="end"
+        sx={{ 
+          padding: '8px',
+          color: '#6C6D70',
+        }}
+      >
+        <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
+          {showPassword ? 'visibility' : 'visibility_off'}
+        </span>
+      </IconButton>
+    </InputAdornment>
+  );
+
   const styles = {
     outlined: {
       '& .MuiOutlinedInput-root': {
@@ -16,7 +61,6 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
         fontSize: '20px',
         fontWeight: '500',
         border: '1px solid #D6D7FF',
-        gap: '20px',
         color: '#000000',
 
         '& fieldset': {
@@ -25,7 +69,7 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
           legend: { display: 'none' },
         },
 
-        '& input': {
+        '& input, & textarea': {
           padding: '20px',
           margin: 0,
           fontSize: '20px',
@@ -37,6 +81,12 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
             color: 'rgba(0, 0, 0, 0.38)',
             opacity: 1,
           },
+        },
+
+        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
+        '& textarea': {
+          resize: 'vertical', // можно растягивать по вертикали
+          minHeight: '80px',  // минимальная высота
         },
 
         '&:hover fieldset': { border: 'none' },
@@ -60,13 +110,12 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
         fontWeight: '500',
         border: '1px solid transparent',
         color: '#000000',
-        padding: 0,
 
         '& fieldset': {
           border: 'none',
         },
 
-        '& input': {
+        '& input, & textarea': {
           padding: '20px',
           margin: 0,
           fontSize: '20px',
@@ -80,12 +129,20 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
           },
         },
 
+        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
+        '& textarea': {
+          resize: 'vertical',
+          minHeight: '80px',
+        },
+
         '&:before, &:after': {
           display: 'none',
         },
 
         '&.Mui-focused': {
           outline: 'none',
+          border: '1px solid #D6D7FF',
+          backgroundColor: '#F9F9F9',
         },
       },
 
@@ -107,7 +164,7 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
           border: 'none',
         },
 
-        '& input': {
+        '& input, & textarea': {
           padding: '20px',
           margin: 0,
           fontSize: '20px',
@@ -121,6 +178,12 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
           },
         },
 
+        // 👇 РАСТЯГИВАНИЕ ДЛЯ TEXTAREA
+        '& textarea': {
+          resize: 'vertical',
+          minHeight: '80px',
+        },
+
         '&.Mui-focused': {
           outline: 'none',
           border: '1px solid #D6D7FF',
@@ -128,6 +191,14 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
       },
     },
   };
+
+  const inputProps: {
+    endAdornment?: React.ReactNode;
+  } = {};
+
+  if (withPasswordToggle && inputType === 'password') {
+    inputProps.endAdornment = passwordToggleIcon;
+  }
 
   if (type === 'labeled') {
     return (
@@ -155,9 +226,10 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
           helperText={errorText}
           variant="outlined"
           fullWidth
-          InputProps={{
-            disableUnderline: true,
-          }}
+          type={getActualInputType()}
+          multiline={multiline}
+          rows={multiline ? rows : undefined}
+          InputProps={inputProps}
         />
       </div>
     );
@@ -171,9 +243,10 @@ export const Input = ({ type, placeholder, label, errorText }: InputProps) => {
       helperText={errorText}
       variant="outlined"
       fullWidth
-      InputProps={{
-        disableUnderline: true,
-      }}
+      type={getActualInputType()}
+      multiline={multiline}
+      rows={multiline ? rows : undefined}
+      InputProps={inputProps}
     />
   );
 };
