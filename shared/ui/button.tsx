@@ -6,12 +6,6 @@ import Download from '../assets/download.svg';
 import Plus from '../assets/plus.svg';
 
 export type IconType = 'download' | 'plus';
-
-const iconMap: Record<IconType, ReactNode> = {
-  download: <Download />,
-  plus: <Plus />,
-};
-
 export type ButtonVariant = 'text' | 'contained' | 'outlined';
 
 interface CustomButtonProps {
@@ -25,6 +19,8 @@ interface CustomButtonProps {
   textColor?: string;
   hoverBgColor?: string;
   borderColor?: string;
+  imgWidth?: number;
+  imgHeight?: number;
 }
 
 export default function CustomButton({
@@ -38,7 +34,19 @@ export default function CustomButton({
   textColor,
   hoverBgColor,
   borderColor,
+  imgWidth = 20,
+  imgHeight = 20,
 }: CustomButtonProps) {
+
+  const getIcon = (icon: IconType): ReactNode => {
+    switch (icon) {
+      case 'download':
+        return <img src={Download.src} alt="download" width={imgWidth} height={imgHeight} />;
+      case 'plus':
+        return <img src={Plus.src} alt="plus" width={imgWidth} height={imgHeight} />;
+    }
+  };
+
   const baseStyles = {
     textTransform: 'none',
     fontWeight: '700',
@@ -76,7 +84,7 @@ export default function CustomButton({
   return (
     <Button
       variant={variant}
-      endIcon={icon ? iconMap[icon] : undefined}
+      endIcon={icon ? getIcon(icon) : undefined}
       onClick={onClick}
       sx={{ ...baseStyles, ...getVariantStyles() }}
     >
